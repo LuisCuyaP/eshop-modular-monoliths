@@ -19,6 +19,8 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Carrito", "Carrito", "{C97D
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Catalogo", "Modules\Catalogo\Catalogo\Catalogo.csproj", "{F3A8887E-2E8A-4911-9614-55410D28E58D}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Carrito", "Modules\Carrito\Carrito\Carrito.csproj", "{028809A1-2E64-4042-9C86-A0B7B0CD7A76}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,6 +35,10 @@ Global
 		{F3A8887E-2E8A-4911-9614-55410D28E58D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{F3A8887E-2E8A-4911-9614-55410D28E58D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{F3A8887E-2E8A-4911-9614-55410D28E58D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{028809A1-2E64-4042-9C86-A0B7B0CD7A76}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{028809A1-2E64-4042-9C86-A0B7B0CD7A76}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{028809A1-2E64-4042-9C86-A0B7B0CD7A76}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{028809A1-2E64-4042-9C86-A0B7B0CD7A76}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -43,6 +49,7 @@ Global
 		{966184DA-00DF-45AF-8A20-781A28E3CC7C} = {FAF31EC7-E818-4FA5-B5C4-67066A27853E}
 		{C97D3F96-CC43-4DB9-B63E-8DFB858E4F1C} = {FAF31EC7-E818-4FA5-B5C4-67066A27853E}
 		{F3A8887E-2E8A-4911-9614-55410D28E58D} = {E7718C52-D6A7-4286-833C-651D561D254E}
+		{028809A1-2E64-4042-9C86-A0B7B0CD7A76} = {C97D3F96-CC43-4DB9-B63E-8DFB858E4F1C}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {06121472-6167-4461-BC63-AC099205B20B}
