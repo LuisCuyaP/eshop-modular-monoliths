@@ -1,4 +1,4 @@
-﻿namespace Catalog.Products.Models;
+﻿namespace Catalogo.Products.Models;
 public class Product : Aggregate<Guid>
 {
     public string Name { get; private set; } = default!;
