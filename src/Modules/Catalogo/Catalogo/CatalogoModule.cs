@@ -1,4 +1,5 @@
-﻿using Microsoft.Extensions.Configuration;
+﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
 namespace Catalogo;
@@ -10,4 +11,9 @@ public static class CatalogoModule
         // Example: services.AddScoped<ICatalogService, CatalogService>();
         return services;
     }
+    public static IApplicationBuilder UseCatalogoModule(this IApplicationBuilder app)
+    {
+        return app;
+    }
+        
 }

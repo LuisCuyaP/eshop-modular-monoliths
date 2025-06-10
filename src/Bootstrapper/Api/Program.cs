@@ -1,6 +1,3 @@
-using Catalogo;
-using Carrito;
-using Pedido;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -11,5 +8,11 @@ builder.Services
     .AddPedidoModule(builder.Configuration);
 
 var app = builder.Build();
+
+//Configure the HTTP request pipeline
+//add middleware here if needed
+app.UseCatalogoModule()
+   .UseCarritoModule()
+   .UsePedidoModule();
 
 app.Run();
