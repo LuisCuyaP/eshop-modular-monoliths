@@ -22,6 +22,8 @@ public class Product : Aggregate<Guid>
             Price = price
         };
 
+        product.AddDomainEvent(new ProductCreatedEvent(product));
+
         return product;
     }
 
@@ -36,6 +38,13 @@ public class Product : Aggregate<Guid>
         Description = description;
         ImageFile = imageFile;
         Price = price;
-        
+
+        // if price has changed, raise ProductPriceChanged domain event
+        if (Price != price)
+        {
+            Price = price;
+            AddDomainEvent(new ProductPriceChangedEvent(this));
+        }
+
     }
 }
