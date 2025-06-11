@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -7,8 +8,25 @@ public static class CatalogoModule
 {
     public static IServiceCollection AddCatalogoModule(this IServiceCollection services, IConfiguration configuration)
     {
-        // Register services, repositories, etc. here
-        // Example: services.AddScoped<ICatalogService, CatalogService>();
+        // Add services to the container.
+
+        // Api Endpoint services
+
+        // Application Use Case services
+        services.AddMediatR(config =>
+        {
+            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
+        });
+
+        // Data - Infrastructure services
+        var connectionString = configuration.GetConnectionString("Database");
+
+        services.AddDbContext<CatalogoDbContext>((sp, options) =>
+        {
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.UseNpgsql(connectionString);
+        });
+
         return services;
     }
     public static IApplicationBuilder UseCatalogoModule(this IApplicationBuilder app)
