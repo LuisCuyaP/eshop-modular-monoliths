@@ -1,7 +1,7 @@
-﻿namespace Catalog.Data;
-public class CatalogDbContext : DbContext
+﻿namespace Catalogo.Data;
+public class CatalogoDbContext : DbContext
 {
-    public CatalogDbContext(DbContextOptions<CatalogDbContext> options)
+    public CatalogoDbContext(DbContextOptions<CatalogoDbContext> options)
         : base(options) { }
 
     public DbSet<Product> Products => Set<Product>();
