@@ -1,8 +1,8 @@
 ﻿
 using Microsoft.AspNetCore.Builder;
-using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
+using Shared.Data.Interceptors;
 
 namespace Catalogo;
 public static class CatalogoModule
@@ -24,7 +24,7 @@ public static class CatalogoModule
 
         services.AddDbContext<CatalogoDbContext>((sp, options) =>
         {
-            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
+            options.AddInterceptors(new AuditableEntityInterceptor());
             options.UseNpgsql(connectionString);
         });
 
