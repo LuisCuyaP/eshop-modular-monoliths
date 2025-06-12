@@ -1,4 +1,5 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿
+using Microsoft.AspNetCore.Builder;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -8,11 +9,11 @@ public static class CatalogoModule
 {
     public static IServiceCollection AddCatalogoModule(this IServiceCollection services, IConfiguration configuration)
     {
-        // Add services to the container.
+        //1. Add services to the container.
 
-        // Api Endpoint services
+        //2. Api Endpoint services
 
-        // Application Use Case services
+        //3. Application Use Case services
         services.AddMediatR(config =>
         {
             config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
@@ -27,11 +28,29 @@ public static class CatalogoModule
             options.UseNpgsql(connectionString);
         });
 
+        services.AddScoped<IDataSeeder, CatalogoDataSeeder>();
+
         return services;
     }
     public static IApplicationBuilder UseCatalogoModule(this IApplicationBuilder app)
     {
+        // Configure the HTTP request pipeline.
+
+        // 1. Use Api Endpoint services
+
+        // 2. Use Application Use Case services
+
+        // 3. Use Data - Infrastructure services  
+        
+        app.UseMigration<CatalogoDbContext>();
+        //InitialiseDatabaseAsync(app).GetAwaiter().GetResult();
         return app;
     }
-        
+
+    //private static async Task InitialiseDatabaseAsync(IApplicationBuilder app)
+    //{
+    //    using var scope = app.ApplicationServices.CreateScope();
+    //    var context = scope.ServiceProvider.GetRequiredService<CatalogoDbContext>();
+    //    await context.Database.MigrateAsync();
+    //}
 }
