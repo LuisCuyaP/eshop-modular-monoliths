@@ -1,14 +1,16 @@
-﻿using MediatR;
+﻿using Catalogo.Products.Dtos;
+using MediatR;
+using Shared.CQRS;
 
 namespace Catalogo.Products.CreateProduct;
 
 //lo que se necesita para crear un producto
-public record CreateProductCommand(string Name, List<string> Category, string Description, string ImageFile, decimal Price) : IRequest<CreateProductResult>;
+public record CreateProductCommand(ProductDto Product) : ICommand<CreateProductResult>;
 
 //lo que se devuelve al crear un producto
 public record CreateProductResult(Guid id);
 
-internal class CreateProductCommandHandler : IRequestHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
     public Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
     {
