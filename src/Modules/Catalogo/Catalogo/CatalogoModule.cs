@@ -1,5 +1,6 @@
 ﻿
 using Microsoft.AspNetCore.Builder;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Shared.Data.Interceptors;
@@ -22,9 +23,12 @@ public static class CatalogoModule
         // Data - Infrastructure services
         var connectionString = configuration.GetConnectionString("Database");
 
+        services.AddScoped<ISaveChangesInterceptor, AuditableEntityInterceptor>();
+        services.AddScoped<ISaveChangesInterceptor, DispatchDomainEventsInterceptor>();
+
         services.AddDbContext<CatalogoDbContext>((sp, options) =>
         {
-            options.AddInterceptors(new AuditableEntityInterceptor());
+            options.AddInterceptors(sp.GetServices<ISaveChangesInterceptor>());
             options.UseNpgsql(connectionString);
         });
 
