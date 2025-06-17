@@ -10,3 +10,4 @@ global using Shared.Data;
 global using Shared.Data.Seed;
 global using Catalogo.Products.Dtos;
 global using Shared.CQRS;
+global using Mapster;
