@@ -8,3 +8,5 @@ global using Catalogo.Data;
 global using Catalogo.Data.Seed;
 global using Shared.Data;
 global using Shared.Data.Seed;
+global using Catalogo.Products.Dtos;
+global using Shared.CQRS;

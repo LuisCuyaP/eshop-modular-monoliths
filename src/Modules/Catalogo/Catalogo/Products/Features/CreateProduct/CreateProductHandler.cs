@@ -1,24 +1,39 @@
-﻿using Catalogo.Products.Dtos;
-using MediatR;
-using Shared.CQRS;
-
-namespace Catalogo.Products.CreateProduct;
+﻿namespace Catalogo.Products.Features.CreateProduct;
 
 //lo que se necesita para crear un producto
 public record CreateProductCommand(ProductDto Product) : ICommand<CreateProductResult>;
 
 //lo que se devuelve al crear un producto
-public record CreateProductResult(Guid id);
+public record CreateProductResult(Guid Id);
 
-internal class CreateProductCommandHandler : ICommandHandler<CreateProductCommand, CreateProductResult>
+internal class CreateProductHandler(CatalogoDbContext dbContext)
+    : ICommandHandler<CreateProductCommand, CreateProductResult>
 {
-    public Task<CreateProductResult> Handle(CreateProductCommand command, CancellationToken cancellationToken)
+    public async Task<CreateProductResult> Handle(CreateProductCommand command,
+        CancellationToken cancellationToken)
     {
-        // Aquí iría la lógica para crear el producto
-        // Por ahora, devolvemos un ID ficticio
-        var productId = Guid.NewGuid();
-        return Task.FromResult(new CreateProductResult(productId));
+        //create Product entity from command object
+        //save to database
+        //return result
+
+        var product = CreateNewProduct(command.Product);
+
+        dbContext.Products.Add(product);
+        await dbContext.SaveChangesAsync(cancellationToken);
+
+        return new CreateProductResult(product.Id);
+    }
+
+    private Product CreateNewProduct(ProductDto productDto)
+    {
+        var product = Product.Create(
+            Guid.NewGuid(),
+            productDto.Name,
+            productDto.Category,
+            productDto.Description,
+            productDto.ImageFile,
+            productDto.Price);
+
+        return product;
     }
 }
-
-
