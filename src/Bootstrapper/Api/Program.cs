@@ -9,6 +9,8 @@ builder.Services
     .AddCarritoModule(builder.Configuration)
     .AddPedidoModule(builder.Configuration);
 
+builder.Services.AddExceptionHandler<CustomExceptionHandler>();
+
 var app = builder.Build();
 
 //Configure the HTTP request pipeline
@@ -18,5 +20,7 @@ app.MapCarter();
 app.UseCatalogoModule()
    .UseCarritoModule()
    .UsePedidoModule();
+
+app.UseExceptionHandler(options => { });
 
 app.Run();
