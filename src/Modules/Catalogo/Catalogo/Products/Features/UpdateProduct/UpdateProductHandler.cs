@@ -29,7 +29,7 @@ internal class UpdateProductHandler(CatalogoDbContext dbContext)
 
         if (product is null)
         {
-            throw new Exception($"Product not found: {command.Product.Id}");
+            throw new ProductNotFoundException(command.Product.Id);
         }
 
         UpdateProductWithNewValues(product, command.Product);
