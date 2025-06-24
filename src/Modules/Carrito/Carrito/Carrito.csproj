@@ -10,4 +10,10 @@
     <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Carrito\EventHandlers\" />
+    <Folder Include="Carrito\Features\CheckoutBasket\" />
+    <Folder Include="Carrito\Features\UpdateItemPriceInBasket\" />
+  </ItemGroup>
+
 </Project>
