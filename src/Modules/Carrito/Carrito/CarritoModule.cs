@@ -38,6 +38,7 @@ public static class CarritoModule
 
         // 3. Use Data - Infrastructure services
         app.UseMigration<BasketDbContext>();
+
         return app;
     }
 }
