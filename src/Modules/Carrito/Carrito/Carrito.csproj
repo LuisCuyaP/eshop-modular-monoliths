@@ -11,7 +11,6 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Carrito\Dtos\" />
     <Folder Include="Carrito\EventHandlers\" />
     <Folder Include="Carrito\Features\CreateBasket\" />
     <Folder Include="Carrito\Features\GetBasket\" />
