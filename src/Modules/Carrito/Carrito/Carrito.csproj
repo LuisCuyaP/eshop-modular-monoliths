@@ -12,7 +12,6 @@
 
   <ItemGroup>
     <Folder Include="Carrito\EventHandlers\" />
-    <Folder Include="Carrito\Features\AddItemIntoBasket\" />
     <Folder Include="Carrito\Features\CheckoutBasket\" />
     <Folder Include="Carrito\Features\UpdateItemPriceInBasket\" />
     <Folder Include="Carrito\Features\RemoveItemFromBasket\" />

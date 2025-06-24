@@ -7,3 +7,4 @@ global using Carrito.Carrito.Exceptions;
 global using Shared.CQRS;
 global using Carrito.Carrito.Dtos;
 global using Mapster;
+global using FluentValidation;
