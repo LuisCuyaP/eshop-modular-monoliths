@@ -10,4 +10,16 @@
     <ProjectReference Include="..\..\..\Shared\Shared\Shared.csproj" />
   </ItemGroup>
 
+  <ItemGroup>
+    <Folder Include="Carrito\Dtos\" />
+    <Folder Include="Carrito\EventHandlers\" />
+    <Folder Include="Carrito\Features\CreateBasket\" />
+    <Folder Include="Carrito\Features\GetBasket\" />
+    <Folder Include="Carrito\Features\DeleteBasket\" />
+    <Folder Include="Carrito\Features\AddItemIntoBasket\" />
+    <Folder Include="Carrito\Features\CheckoutBasket\" />
+    <Folder Include="Carrito\Features\UpdateItemPriceInBasket\" />
+    <Folder Include="Carrito\Features\RemoveItemFromBasket\" />
+  </ItemGroup>
+
 </Project>
