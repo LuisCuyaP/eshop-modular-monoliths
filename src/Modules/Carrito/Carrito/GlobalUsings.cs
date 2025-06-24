@@ -5,3 +5,5 @@ global using System.Reflection;
 global using Carrito.Data;
 global using Carrito.Carrito.Exceptions;
 global using Shared.CQRS;
+global using Carrito.Carrito.Dtos;
+global using Mapster;
