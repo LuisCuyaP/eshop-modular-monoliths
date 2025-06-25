@@ -13,13 +13,8 @@ var carritoAssembly = typeof(CarritoModule).Assembly;
 builder.Services
     .AddCarterWithAssemblies(catalogAssembly, carritoAssembly);
 
-builder.Services.AddMediatR(config =>
-{
-    config.RegisterServicesFromAssemblies(catalogAssembly ,carritoAssembly);
-    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-});
-builder.Services.AddValidatorsFromAssemblies([catalogAssembly, carritoAssembly]);
+builder.Services
+    .AddMediatRWithAssemblies(catalogAssembly, carritoAssembly);
 
 //module services: catalogo, carrito, pedido
 builder.Services
