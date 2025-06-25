@@ -14,14 +14,6 @@ public static class CatalogoModule
         //2. Api Endpoint services
 
         //3. Application Use Case services
-        services.AddMediatR(config =>
-        {
-            config.RegisterServicesFromAssembly(Assembly.GetExecutingAssembly());
-            config.AddOpenBehavior(typeof(ValidationBehavior<,>));
-            config.AddOpenBehavior(typeof(LoggingBehavior<,>));
-        });
-
-        services.AddValidatorsFromAssembly(Assembly.GetExecutingAssembly());
 
         // Data - Infrastructure services
         var connectionString = configuration.GetConnectionString("Database");
