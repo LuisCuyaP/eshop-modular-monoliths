@@ -4,9 +4,24 @@ builder.Host.UseSerilog((context, config) =>
     config.ReadFrom.Configuration(context.Configuration));
 
 //Add services to the container
-builder.Services
-    .AddCarterWithAssemblies(typeof(CatalogoModule).Assembly);
 
+
+//common services: carter, mediatr, fluent validation
+var catalogAssembly = typeof(CatalogoModule).Assembly;
+var carritoAssembly = typeof(CarritoModule).Assembly;
+
+builder.Services
+    .AddCarterWithAssemblies(catalogAssembly, carritoAssembly);
+
+builder.Services.AddMediatR(config =>
+{
+    config.RegisterServicesFromAssemblies(catalogAssembly ,carritoAssembly);
+    config.AddOpenBehavior(typeof(ValidationBehavior<,>));
+    config.AddOpenBehavior(typeof(LoggingBehavior<,>));
+});
+builder.Services.AddValidatorsFromAssemblies([catalogAssembly, carritoAssembly]);
+
+//module services: catalogo, carrito, pedido
 builder.Services
     .AddCatalogoModule(builder.Configuration)
     .AddCarritoModule(builder.Configuration)
