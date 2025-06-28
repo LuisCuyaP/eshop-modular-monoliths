@@ -1,8 +1,4 @@
-﻿using Carrito.Carrito.Dtos;
-using FluentValidation;
-using Shared.CQRS;
-
-namespace Carrito.Carrito.Features.CreateBasket;
+﻿namespace Carrito.Carrito.Features.CreateBasket;
 public record CreateBasketCommand(ShoppingCartDto ShoppingCart)
     : ICommand<CreateBasketResult>;
 public record CreateBasketResult(Guid Id);
