@@ -16,6 +16,11 @@ builder.Services
 builder.Services
     .AddMediatRWithAssemblies(catalogAssembly, carritoAssembly);
 
+builder.Services.AddStackExchangeRedisCache(options =>
+{
+    options.Configuration = builder.Configuration.GetConnectionString("Redis");
+});    
+
 //module services: catalogo, carrito, pedido
 builder.Services
     .AddCatalogoModule(builder.Configuration)
