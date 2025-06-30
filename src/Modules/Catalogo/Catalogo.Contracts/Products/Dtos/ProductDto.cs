@@ -1,4 +1,5 @@
-﻿namespace Catalogo.Products.Dtos;
+namespace Catalogo.Contracts.Products.Dtos;
+
 public record ProductDto(
     Guid Id,
     string Name,

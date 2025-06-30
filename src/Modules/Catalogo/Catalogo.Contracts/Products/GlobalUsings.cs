@@ -1,0 +1,1 @@
+global using Catalogo.Contracts.Products.Dtos; 
