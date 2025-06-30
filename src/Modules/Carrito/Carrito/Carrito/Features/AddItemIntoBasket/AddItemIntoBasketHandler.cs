@@ -1,6 +1,7 @@
-﻿namespace Carrito.Carrito.Features.AddItemIntoBasket;
-public record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDto ShoppingCartItem)
-    : ICommand<AddItemIntoBasketResult>;
+﻿using Catalogo.Contracts.Products.Features.GetProductById;
+
+namespace Carrito.Carrito.Features.AddItemIntoBasket;
+public record AddItemIntoBasketCommand(string UserName, ShoppingCartItemDto ShoppingCartItem) : ICommand<AddItemIntoBasketResult>;
 public record AddItemIntoBasketResult(Guid Id);
 public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBasketCommand>
 {
@@ -12,8 +13,7 @@ public class AddItemIntoBasketCommandValidator : AbstractValidator<AddItemIntoBa
     }
 }
 
-internal class AddItemIntoBasketHandler(IBasketRepository repository)
-    : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
+internal class AddItemIntoBasketHandler(IBasketRepository repository, ISender sender) : ICommandHandler<AddItemIntoBasketCommand, AddItemIntoBasketResult>
 {
     public async Task<AddItemIntoBasketResult> Handle(AddItemIntoBasketCommand command, CancellationToken cancellationToken)
     {
@@ -30,15 +30,17 @@ internal class AddItemIntoBasketHandler(IBasketRepository repository)
         var shoppingCart = await repository.GetBasket(command.UserName, false, cancellationToken);
 
         //comunicacion entre modulos, con el modulo de catalogo para obtener el producto de GetProductByIdEndpoint
-        //var result = await sender.Send(new GetProductByIdQuery(id));
+        var result = await sender.Send(new GetProductByIdQuery(command.ShoppingCartItem.ProductId));
 
 
         shoppingCart.AddItem(
                 command.ShoppingCartItem.ProductId,
                 command.ShoppingCartItem.Quantity,
                 command.ShoppingCartItem.Color,
-                command.ShoppingCartItem.Price,
-                command.ShoppingCartItem.ProductName);
+                //command.ShoppingCartItem.Price,
+                //command.ShoppingCartItem.ProductName
+                result.Product.Price,
+                result.Product.Name);
 
         await repository.SaveChangesAsync(command.UserName ,cancellationToken);
 
