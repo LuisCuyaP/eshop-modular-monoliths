@@ -4,7 +4,7 @@ global using Microsoft.EntityFrameworkCore;
 global using System.Reflection;
 global using Carrito.Data;
 global using Carrito.Carrito.Exceptions;
-global using Shared.CQRS;
+global using Shared.Contracts.CQRS;
 global using Carrito.Carrito.Dtos;
 global using Mapster;
 global using FluentValidation;

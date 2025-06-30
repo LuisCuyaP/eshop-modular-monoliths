@@ -9,7 +9,7 @@ global using Catalogo.Data.Seed;
 global using Shared.Data;
 global using Shared.Data.Seed;
 global using Catalogo.Products.Dtos;
-global using Shared.CQRS;
+global using Shared.Contracts.CQRS;
 global using Mapster;
 global using MediatR;
 global using Microsoft.Extensions.Logging;
