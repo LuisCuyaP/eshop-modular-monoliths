@@ -21,10 +21,7 @@ builder.Services.AddStackExchangeRedisCache(options =>
     options.Configuration = builder.Configuration.GetConnectionString("Redis");
 });    
 
-builder.Services.AddMassTransitWithAssemblies(
-    catalogAssembly,
-    carritoAssembly
-);
+builder.Services.AddMassTransitWithAssemblies(builder.Configuration, catalogAssembly, carritoAssembly);
 
 //module services: catalogo, carrito, pedido
 builder.Services

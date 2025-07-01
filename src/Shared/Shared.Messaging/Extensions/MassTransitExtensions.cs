@@ -6,8 +6,7 @@ using System.Reflection;
 namespace Shared.Messaging.Extensions;
 public static class MassTransitExtentions
 {
-    public static IServiceCollection AddMassTransitWithAssemblies
-        (this IServiceCollection services, params Assembly[] assemblies)
+    public static IServiceCollection AddMassTransitWithAssemblies(this IServiceCollection services, IConfiguration configuration , params Assembly[] assemblies)
     {
         services.AddMassTransit(config =>
         {
@@ -20,9 +19,19 @@ public static class MassTransitExtentions
             config.AddSagas(assemblies);
             config.AddActivities(assemblies);
 
-            config.UsingInMemory((context, cfg) =>
+            /*  config.UsingInMemory((context, cfg) =>
+             {
+                 cfg.ConfigureEndpoints(context);
+             }); */
+            
+            config.UsingRabbitMq((context, configurator) =>
             {
-                cfg.ConfigureEndpoints(context);
+                configurator.Host(new Uri(configuration["MessageBroker:Host"]!), host =>
+                {
+                    host.Username(configuration["MessageBroker:UserName"]!);
+                    host.Password(configuration["MessageBroker:Password"]!);
+                });
+                configurator.ConfigureEndpoints(context);
             });
         });
 
