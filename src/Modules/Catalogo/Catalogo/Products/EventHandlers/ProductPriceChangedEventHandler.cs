@@ -17,7 +17,7 @@ public class ProductPriceChangedEventHandler(IBus bus, ILogger<ProductPriceChang
             Category = notification.Product.Category,
             Description = notification.Product.Description,
             ImageFile = notification.Product.ImageFile,
-            Price = notification.Product.Price //actualizar el precio del producto
+            Price = notification.Product.Price //actualizar el precio del producto 
         };
         
         await bus.Publish(integrationEvent, cancellationToken);
