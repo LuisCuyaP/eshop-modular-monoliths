@@ -11,12 +11,13 @@ builder.Host.UseSerilog((context, config) =>
 //common services: carter, mediatr, fluent validation
 var catalogAssembly = typeof(CatalogoModule).Assembly;
 var carritoAssembly = typeof(CarritoModule).Assembly;
+var pedidoAssembly = typeof(OrderingModule).Assembly;
 
 builder.Services
-    .AddCarterWithAssemblies(catalogAssembly, carritoAssembly);
+    .AddCarterWithAssemblies(catalogAssembly, carritoAssembly, pedidoAssembly);
 
 builder.Services
-    .AddMediatRWithAssemblies(catalogAssembly, carritoAssembly);
+    .AddMediatRWithAssemblies(catalogAssembly, carritoAssembly, pedidoAssembly);
 
 builder.Services.AddStackExchangeRedisCache(options =>
 {
@@ -32,7 +33,7 @@ builder.Services.AddAuthorization();
 builder.Services
     .AddCatalogoModule(builder.Configuration)
     .AddCarritoModule(builder.Configuration)
-    .AddPedidoModule(builder.Configuration);
+    .AddOrderingModule(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
@@ -50,6 +51,6 @@ app.MapCarter();
 
 app.UseCatalogoModule()
    .UseCarritoModule()
-   .UsePedidoModule();
+   .UseOrderingModule();
 
 app.Run();

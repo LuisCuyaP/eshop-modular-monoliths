@@ -24,7 +24,7 @@
   <ItemGroup>
     <ProjectReference Include="..\..\Modules\Carrito\Carrito\Carrito.csproj" />
     <ProjectReference Include="..\..\Modules\Catalogo\Catalogo\Catalogo.csproj" />
-    <ProjectReference Include="..\..\Modules\Pedido\Pedido\Pedido.csproj" />
+    <ProjectReference Include="..\..\Modules\Ordering\Ordering\Ordering.csproj" />
   </ItemGroup>
 
 </Project>
