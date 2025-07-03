@@ -31,8 +31,8 @@ builder.Services.AddAuthorization();
 //module services: catalogo, carrito, pedido
 builder.Services
     .AddCatalogoModule(builder.Configuration)
-    .AddCarritoModule(builder.Configuration)
-    .AddPedidoModule(builder.Configuration);
+    .AddCarritoModule(builder.Configuration);
+    //.AddPedidoModule(builder.Configuration);
 
 builder.Services.AddExceptionHandler<CustomExceptionHandler>();
 
@@ -49,7 +49,7 @@ app.UseAuthorization();
 app.MapCarter();
 
 app.UseCatalogoModule()
-   .UseCarritoModule()
-   .UsePedidoModule();
+   .UseCarritoModule();
+   //.UsePedidoModule();
 
 app.Run();
