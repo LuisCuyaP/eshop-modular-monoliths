@@ -40,11 +40,13 @@ var app = builder.Build();
 
 //Configure the HTTP request pipeline
 //add middleware here if needed
-app.MapCarter();
 app.UseSerilogRequestLogging();
 app.UseExceptionHandler(options => { });
+
 app.UseAuthentication();
 app.UseAuthorization();
+
+app.MapCarter();
 
 app.UseCatalogoModule()
    .UseCarritoModule()
