@@ -45,6 +45,9 @@ internal class CheckoutBasketHandler(BasketDbContext dbContext) : ICommandHandle
                                 await repository.DeleteBasket(command.BasketCheckout.UserName, cancellationToken);
                                 return new CheckoutBasketResult(true); */
 
+
+        // recordad que la publicacion del evento lo hara la clase outBoxProcessor
+        // que se ejecuta en segundo plano y se encarga de publicar los eventos
         // abro una transacción para evitar inconsistencias
         await using var transactions = await dbContext.Database.BeginTransactionAsync(cancellationToken);
         try
