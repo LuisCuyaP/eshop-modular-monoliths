@@ -5,7 +5,7 @@ FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
 USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-EXPOSE 8081
+#EXPOSE 8081
 
 
 # This stage is used to build the service project
@@ -14,9 +14,12 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["Bootstrapper/Api/Api.csproj", "Bootstrapper/Api/"]
 COPY ["Modules/Carrito/Carrito/Carrito.csproj", "Modules/Carrito/Carrito/"]
-COPY ["Shared/Shared/Shared.csproj", "Shared/Shared/"]
 COPY ["Modules/Catalogo/Catalogo/Catalogo.csproj", "Modules/Catalogo/Catalogo/"]
-COPY ["Modules/Pedido/Pedido/Pedido.csproj", "Modules/Pedido/Pedido/"]
+COPY ["Modules/Catalogo/Catalogo.Contracts/Catalogo.Contracts.csproj", "Modules/Catalogo/Catalogo.Contracts/"]
+COPY ["Modules/Ordering/Ordering/Ordering.csproj", "Modules/Ordering/Ordering/"]
+COPY ["Shared/Shared/Shared.csproj", "Shared/Shared/"]
+COPY ["Shared/Shared.Contracts/Shared.Contracts.csproj", "Shared/Shared.Contracts/"]
+COPY ["Shared/Shared.Messaging/Shared.Messaging.csproj", "Shared/Shared.Messaging/"]
 RUN dotnet restore "./Bootstrapper/Api/Api.csproj"
 COPY . .
 WORKDIR "/src/Bootstrapper/Api"
