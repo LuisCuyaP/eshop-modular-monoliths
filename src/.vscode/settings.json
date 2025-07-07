@@ -1,1 +1,8 @@
-{}
+{
+    "docker.defaultRegistryPath": "",
+    "omnisharp.enableImportCompletion": true,
+    "omnisharp.enableRoslynAnalyzers": true,
+    "dotnet.completion.showCompletionItemsFromUnimportedNamespaces": true,
+    "csharp.debug.console": "internalConsole",
+    "csharp.suppressDotnetInstallWarning": true
+}

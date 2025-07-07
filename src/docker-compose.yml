@@ -16,5 +16,24 @@ services:
   identity:
     image: quay.io/keycloak/keycloak:24.0.3
 
+  api:
+    image: ${DOCKER_REGISTRY-}api
+    build:
+      context: .
+      dockerfile: Bootstrapper/Api/Dockerfile
+      target: debug  # Use the debug stage that runs the application
+    container_name: eshop-api-debug
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+    ports:
+      - "6000:8080"
+    volumes:
+      - .:/src  # Mount source code for debugging
+    depends_on:
+      - eshopdb
+      - distributedcache
+      - messagebus
+      - identity
+
 volumes:
   postgres_eshopdb:
