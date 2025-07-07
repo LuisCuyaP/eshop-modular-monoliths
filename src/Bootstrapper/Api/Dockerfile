@@ -1,17 +1,21 @@
-# See https://aka.ms/customizecontainer to learn how to customize your debug container and how Visual Studio uses this Dockerfile to build your images for faster debugging.
-
-# This stage is used when running from VS in fast mode (Default for Debug configuration)
+# Etapa base (runtime)
 FROM mcr.microsoft.com/dotnet/aspnet:8.0 AS base
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
-#EXPOSE 8081
 
+# Etapa para instalar vsdbg (depurador) - se puede usar para debug y fast mode
+FROM base AS vsdbg
+RUN apt-get update && apt-get install -y unzip curl \
+    && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg \
+    && chmod +x /vsdbg/vsdbg
+USER $APP_UID
 
-# This stage is used to build the service project
+# Etapa build
 FROM mcr.microsoft.com/dotnet/sdk:8.0 AS build
 ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
+
+# Copiar todos los csproj (una sola vez)
 COPY ["Bootstrapper/Api/Api.csproj", "Bootstrapper/Api/"]
 COPY ["Modules/Carrito/Carrito/Carrito.csproj", "Modules/Carrito/Carrito/"]
 COPY ["Modules/Catalogo/Catalogo/Catalogo.csproj", "Modules/Catalogo/Catalogo/"]
@@ -20,17 +24,41 @@ COPY ["Modules/Ordering/Ordering/Ordering.csproj", "Modules/Ordering/Ordering/"]
 COPY ["Shared/Shared/Shared.csproj", "Shared/Shared/"]
 COPY ["Shared/Shared.Contracts/Shared.Contracts.csproj", "Shared/Shared.Contracts/"]
 COPY ["Shared/Shared.Messaging/Shared.Messaging.csproj", "Shared/Shared.Messaging/"]
-RUN dotnet restore "./Bootstrapper/Api/Api.csproj"
-COPY . .
-WORKDIR "/src/Bootstrapper/Api"
-RUN dotnet build "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
-# This stage is used to publish the service project to be copied to the final stage
+# Restaurar dependencias
+RUN dotnet restore "Bootstrapper/Api/Api.csproj"
+
+# Copiar el resto del código
+COPY . .
+
+# Build del proyecto
+WORKDIR "/src/Bootstrapper/Api"
+RUN dotnet build "Api.csproj" -c $BUILD_CONFIGURATION -o /app/build
+
+# Etapa publish
 FROM build AS publish
 ARG BUILD_CONFIGURATION=Release
-RUN dotnet publish "./Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
+RUN dotnet publish "Api.csproj" -c $BUILD_CONFIGURATION -o /app/publish /p:UseAppHost=false
 
-# This stage is used in production or when running from VS in regular mode (Default when not using the Debug configuration)
+# Etapa debug (reutiliza build + depurador)
+FROM mcr.microsoft.com/dotnet/sdk:8.0 AS debug
+WORKDIR /src
+
+# Reutiliza instalación del depurador
+RUN apt-get update && apt-get install -y unzip curl \
+    && curl -sSL https://aka.ms/getvsdbgsh | bash /dev/stdin -v latest -l /vsdbg \
+    && chmod +x /vsdbg/vsdbg
+
+# Copiar todo (una vez)
+COPY . .
+
+WORKDIR "/src/Bootstrapper/Api"
+RUN dotnet build "Api.csproj" -c Debug -o /app/build
+WORKDIR /app/build
+EXPOSE 8080
+ENTRYPOINT ["dotnet", "Api.dll"]
+
+# Etapa final (producción)
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
